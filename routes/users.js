@@ -11,108 +11,14 @@ function authenticate(req,res,next){
     }
     try{
         var decoded = jwt.verify(token, '#Csgj/PD5%+VZIOD');
-        req.user = decoded;
+        req.user_id = decoded._id;
+        // console.log(req.user_id);
         next();
     }catch(e){
         return res.status(400).send("Invalid Token");
     }
 }
-// router.use("/cart",authenticate) {
-//   })
 
-  // router.use("/usercart",function authenticate(req, res, next) {
-  //   let token = req.headers.Authorization;
-   
-  //   try {
-  //     if(req.headers.Authorization){
-  //       var tokenCorrect = jwt.verify(token,"#Csgj/PD5%+VZIOD",function(err, decoded) {
-  //         if (err) {
-  //           res.json({
-  //             message:"Internal Server Error..!!"
-  //           })
-  //         }
-       
-  //          req.user_id = decoded.id
-  
-        
-  //       next()
-  //       });
-  
-  //     }
-  //     else
-  //     {
-  //       res.status(500).json({
-  //         message:"No Token Present..!!"
-  //       })
-  //     }
-  //   } catch (error) {
-      
-  //     res.status(500).json({
-  //       message:"Un Authorized..!!"
-  //     })
-  //   }
-  // })
-
-
-  // router.use("/addquantity",function authenticate(req, res, next) {
-  //   let token = req.headers.Authorization;
-  
-  //   try {
-  //     if(req.headers.Authorization){
-  //       var tokenCorrect = jwt.verify(token,"#Csgj/PD5%+VZIOD",function(err, decoded) {
-  //         if (err) {
-  //           res.json({
-  //             message:"Internal Server Error..!!"
-  //           })
-  //         }
-  //         console.log(decoded)
-  //          req.user_id = decoded.id
-  //       next()
-  //       });
-  
-  //     }
-  //     else
-  //     {
-  //       res.json({
-  //         message:"No Token Present..!!"
-  //       })
-  //     }
-  //   } catch (error) {
-        
-  //     res.json({
-  //       message:"Un Authorized..!!"
-  //     })
-  //   }
-  // })
-
-  // router.use("/deletequantity",function authenticate(req, res, next) {
-  //   let token = req.headers.Authorization;
-  //   try {
-  //     if(req.headers.Authorization){
-  //       var tokenCorrect = jwt.verify(token,"#Csgj/PD5%+VZIOD",function(err, decoded) {
-  //         if (err) {
-  //           res.json({
-  //             message:"Internal Server Error..!!"
-  //           })
-  //         }
-  //          req.user_id = decoded.id
-  
-  //       next()
-  //       });
-  
-  //     }
-  //     else
-  //     {
-  //       res.json({
-  //         message:"No Token Present..!!"
-  //       })
-  //     }
-  //   } catch (error) {
-  //     res.json({
-  //       message:"Un Authorized..!!"
-  //     })
-  //   }
-  // })
 
 /* GET users listing. */
 router.get('/getusers',userModule.getUser );

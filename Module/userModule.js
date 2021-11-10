@@ -74,7 +74,6 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postcart = async (req, res) => {
   
-
   const cartItem = new Cart({
     _id: req.user_id,
     products: req.body.cartItem,
@@ -89,9 +88,13 @@ exports.postcart = async (req, res) => {
           { _id: req.user_id },
           { $push: { products: cartItem.products } }
         );
+        res.json({
+          message: "Product added to cart..!!",
+        })
+
       } catch (error) {
         console.log(error);
-        res.json({
+        res.stautus(500).json({
           message: "Something went wrong..!!",
         });
       }
@@ -99,10 +102,13 @@ exports.postcart = async (req, res) => {
       //insert new document in the cart by the _id with new mail id
       var response = await cartItem.save();
       //and update the product list
+      res.json({
+        message: "Product added to cart..!!",
+      })
     }
   } catch (error) {
     console.log(error);
-    res.json({
+    res.stautus(500).json({
       message: "Item Not Added",
       error: error,
     });
@@ -110,8 +116,6 @@ exports.postcart = async (req, res) => {
 };
 
 exports.getUserCart = async (req, res, next) => {
-  
-
   let id = req.user_id;
   try {
       
@@ -141,9 +145,8 @@ exports.getUserCart = async (req, res, next) => {
       });
     } 
   catch (error) {
-    res.json({
+    res.status(500).json({
       message: "Cart is Empty",
-      error,
     });
   }
 };
@@ -194,13 +197,10 @@ exports.addQtuantity = async (req, res, next) => {
 
 exports.deleteQuantity = async (req, res, next) => {
   
-  
-
   let userId = req.user_id;
   let productId = req.body.productId;
   let quantity = req.body.quantity;
 
- 
     if (quantity > 1) {
       try {
         let product = await Cart.updateOne(
@@ -208,7 +208,9 @@ exports.deleteQuantity = async (req, res, next) => {
           { $inc: { "products.$[i].quantity": -1 } },
           { arrayFilters: [{ "i._id": productId }] }
         );
-         
+         res.json({
+           message: "quantity updated",
+         })
       }
       catch(error){
         console.log(error)
@@ -232,6 +234,7 @@ exports.deleteQuantity = async (req, res, next) => {
         );
         res.json({
           message:"product deleted from cart..!!"
+          
         })
       } 
       catch (error) {

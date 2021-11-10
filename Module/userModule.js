@@ -60,38 +60,20 @@ exports.postLogin = async (req, res, next) => {
           message: "Password Matched..!!",
         });
       } else {
-        res.json({
+        res.status(500).json({
           message: "Password did not match..!!",
         });
       }
     }
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: "User Not Found..!!",
     });
   }
 };
 
 exports.postcart = async (req, res) => {
-  let token = req.headers.authorization;
-  if (req.headers.authorization) {
-    var tokenCorrect = jwt.verify(
-      token,
-      "#Csgj/PD5%+VZIOD",
-      function (err, decoded) {
-        if (err) {
-          res.json({
-            message: "Internal Server Error..!!",
-          });
-        }
-        req.user_id = decoded._id;
-      }
-    );
-  } else {
-    res.json({
-      message: "No Token Present..!!",
-    });
-  }
+  
 
   const cartItem = new Cart({
     _id: req.user_id,
@@ -128,27 +110,7 @@ exports.postcart = async (req, res) => {
 };
 
 exports.getUserCart = async (req, res, next) => {
-  let token = req.headers.authorization;
-
-  if (req.headers.authorization) {
-    var tokenCorrect = jwt.verify(
-      token,
-      "#Csgj/PD5%+VZIOD",
-      function (err, decoded) {
-        if (err) {
-          res.json({
-            message: "Internal Server Error..!!",
-          });
-        }
-
-        req.user_id = decoded._id;
-      }
-    );
-  } else {
-    res.json({
-      message: "No Token Present..!!",
-    });
-  }
+  
 
   let id = req.user_id;
   try {
@@ -189,26 +151,7 @@ exports.getUserCart = async (req, res, next) => {
 exports.addQtuantity = async (req, res, next) => {
   //  let userId = authenticate(req.header.authorization)
 
-  let token = req.headers.authorization;
-
-  if (req.headers.authorization) {
-    var tokenCorrect = jwt.verify(
-      token,
-      "#Csgj/PD5%+VZIOD",
-      function (err, decoded) {
-        if (err) {
-          res.json({
-            message: "Internal Server Error..!!",
-          });
-        }
-        req.user_id = decoded._id;
-      }
-    );
-  } else {
-    res.json({
-      message: "No Token Present..!!",
-    });
-  }
+  
 
   let productId = req.body.productId;
   try {
@@ -251,26 +194,7 @@ exports.addQtuantity = async (req, res, next) => {
 
 exports.deleteQuantity = async (req, res, next) => {
   
-  let token = req.headers.authorization;
-
-  if (req.headers.authorization) {
-    var tokenCorrect = jwt.verify(
-      token,
-      "#Csgj/PD5%+VZIOD",
-      function (err, decoded) {
-        if (err) {
-          res.json({
-            message: "Internal Server Error..!!",
-          });
-        }
-        req.user_id = decoded._id;
-      }
-    );
-  } else {
-    res.json({
-      message: "No Token Present..!!",
-    });
-  }
+  
 
   let userId = req.user_id;
   let productId = req.body.productId;

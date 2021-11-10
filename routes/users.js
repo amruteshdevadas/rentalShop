@@ -7,17 +7,21 @@ function authenticate(req,res,next){
     var token = req.headers.authorization;
     // console.log(req);
     if(!token){
-        return res.status(401).send("Access Denied");
+        return res.status(401).json({mesaage:"Please Login"})
     }
-    try{
-        var decoded = jwt.verify(token, '#Csgj/PD5%+VZIOD');
-        req.user_id = decoded._id;
-        // console.log(req.user_id);
-        next();
-    }catch(e){
-        return res.status(400).send("Invalid Token");
-    }
+    else{
+        try{
+            var decoded = jwt.verify(token, '#Csgj/PD5%+VZIOD');
+            req.user_id = decoded._id;
+            // console.log(req.user_id);
+            next();
+        }
+        catch(e){
+            return res.status(400).json({message:"Please Login"})
+        }
+    }  
 }
+
 
 
 /* GET users listing. */
